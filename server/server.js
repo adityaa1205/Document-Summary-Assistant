@@ -14,8 +14,8 @@ app.use(express.json());
 console.log("✅ GEMINI_API_KEY:", process.env.GEMINI_API_KEY?.slice(0, 10) + "...");
 
 // Routes
-import fileRoutes from "./routes/fileRoutes.js";
-app.use("/api", fileRoutes);
+import fileroutes from "./routes/fileroutes.js";
+app.use("/api", fileroutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
