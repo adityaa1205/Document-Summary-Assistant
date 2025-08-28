@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import parsePDF from "../utils/pdfParser.js";
+import parsePDF from "../utils/Pdfparser.js";
 import doOCR from "../utils/ocr.js";
 import { summarizeText } from "./summarycontroller.js";
 
