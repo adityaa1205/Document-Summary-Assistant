@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from "react";
+import FileUpload from "./components/FileUpload.jsx";
+import Result from "./pages/Result.jsx";
+
+export default function App() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center p-6 text-gray-900 dark:text-gray-100">
+      {/* Theme Toggle */}
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="absolute top-4 right-4 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg shadow hover:scale-105 transition"
+      >
+        {darkMode ? "🌙 Dark" : "☀️ Light"}
+      </button>
+      <h1 className="text-3xl font-bold mb-2">📄 Document Summary Assistant</h1>
+      <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl mb-6">
+        Upload your documents and instantly generate clear, concise summaries.  
+        Switch between extracted text and AI-generated insights with ease.
+      </p>
+
+      <div className="w-full max-w-2xl">
+        <FileUpload onResult={setData} setLoading={setLoading} />
+        {loading && <p className="text-blue-500 mt-4">⏳ Processing your document...</p>}
+        {data && <Result data={data} />}
+      </div>
+    </div>
+  );
+}
+
+
+
+
+
+
+import React, { useState } from "react";
+import { jsPDF } from "jspdf";
+
+export default function Result({ data }) {
+  const [tab, setTab] = useState("summary");
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.text("AI Document Summary", 10, 10);
+    doc.text(data.summary || "No summary", 10, 20);
+    doc.save("summary.pdf");
+  };
+
+  return (
+    <div className="mt-6">
+      {/* Tab Switcher */}
+      <div className="flex space-x-2 mb-4">
+        <button
+          onClick={() => setTab("summary")}
+          className={`flex-1 py-2 rounded-lg ${tab === "summary" ? "bg-green-600 text-white" : "bg-gray-200"}`}
+        >
+          Summary
+        </button>
+        <button
+          onClick={() => setTab("text")}
+          className={`flex-1 py-2 rounded-lg ${tab === "text" ? "bg-green-600 text-white" : "bg-gray-200"}`}
+        >
+          Extracted Text
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      <div className="bg-green-50 p-4 rounded-lg shadow-inner min-h-[200px]">
+        {tab === "summary" ? (
+          <p className="whitespace-pre-wrap text-gray-800">{data.summary}</p>
+        ) : (
+          <p className="whitespace-pre-wrap text-gray-700">{data.text}</p>
+        )}
+      </div>
+
+      {/* Buttons */}
+      {tab === "summary" && (
+        <button
+          onClick={downloadPDF}
+          className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+        >
+          ⬇ Download Summary as PDF
+        </button>
+      )}
+      <button
+        onClick={() => window.location.reload()}
+        className="mt-4 ml-3 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+      >
+        🔄 Start Again
+      </button>
+    </div>
+  );
+}
