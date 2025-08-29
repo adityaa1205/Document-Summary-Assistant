@@ -174,3 +174,37 @@ export default function Result({ data }) {
 //     </div>
 //   );
 // }
+
+
+// // server/server.js
+// import express from "express";
+// import cors from "cors";
+// import dotenv from "dotenv";
+
+// // Load environment variables
+// dotenv.config({ override: true });
+
+// const app = express();
+
+
+// // Middleware
+// app.use(cors());
+
+// app.use(express.json());
+
+// // Debug log to confirm key is loaded
+// if (process.env.GEMINI_API_KEY) {
+//   console.log("✅ GEMINI_API_KEY:", process.env.GEMINI_API_KEY.slice(0, 10) + "...");
+// } else {
+//   console.warn("⚠️ GEMINI_API_KEY is missing in .env");
+// }
+
+// // Routes
+// import fileRoutes from "./routes/fileroutes.js";
+// app.use("/api", fileRoutes);
+
+// // Start server
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on port ${PORT}`);
+// });
