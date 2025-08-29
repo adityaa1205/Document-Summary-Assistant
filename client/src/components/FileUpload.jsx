@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -5,6 +6,8 @@ import axios from "axios";
 export default function FileUpload({ onResult, setLoading }) {
   const [length, setLength] = useState(1); // 0=short,1=medium,2=long
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ maxFiles: 1 });
+
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const handleUpload = async () => {
     if (!acceptedFiles.length) return alert("Please select a file");
@@ -15,11 +18,9 @@ export default function FileUpload({ onResult, setLoading }) {
 
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        process.env.REACT_APP_API_URL + "/api/process",
-        fd,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const { data } = await axios.post(`${API_URL}/api/process`, fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       onResult(data);
     } catch (err) {
       alert(err?.response?.data?.error || err.message);
@@ -30,7 +31,10 @@ export default function FileUpload({ onResult, setLoading }) {
 
   return (
     <div>
-      <div {...getRootProps()} className="border-2 border-dashed border-green-400 bg-green-50 p-10 text-center rounded-xl cursor-pointer hover:bg-green-100 transition">
+      <div
+        {...getRootProps()}
+        className="border-2 border-dashed border-green-400 bg-green-50 p-10 text-center rounded-xl cursor-pointer hover:bg-green-100 transition"
+      >
         <input {...getInputProps()} />
         <p className="text-gray-500">Drag & drop a PDF or image here, or click to select</p>
       </div>

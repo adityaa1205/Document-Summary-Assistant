@@ -1,33 +1,94 @@
+// // server/server.js
+// import express from "express";
+// import cors from "cors";
+// import dotenv from "dotenv";
+
+// // Load environment variables
+// dotenv.config({ override: true });
+
+// const app = express();
+
+
+// // Middleware
+// app.use(cors());
+
+// app.use(express.json());
+
+// // Debug log to confirm key is loaded
+// if (process.env.GEMINI_API_KEY) {
+//   console.log("✅ GEMINI_API_KEY:", process.env.GEMINI_API_KEY.slice(0, 10) + "...");
+// } else {
+//   console.warn("⚠️ GEMINI_API_KEY is missing in .env");
+// }
+
+// // Routes
+// import fileRoutes from "./routes/fileroutes.js";
+// app.use("/api", fileRoutes);
+
+// // Start server
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running on port ${PORT}`);
+// });
+
 // server/server.js
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Load environment variables
 dotenv.config({ override: true });
 
 const app = express();
 
-// ✅ Restrict CORS to only your frontend
+// ------------------- Middleware -------------------
+const allowedOrigins = [
+  "http://localhost:3000",                 // local dev
+  "https://document-summary-assistant-omega.vercel.app/"       // 🔁 replace with your deployed frontend
+];
+
 app.use(
   cors({
-    origin: "https://your-frontend.vercel.app", // 🔹 replace with your actual Vercel URL
+    origin: allowedOrigins,
     credentials: true,
   })
 );
 
 app.use(express.json());
 
-// Debug log to confirm key is loaded
-console.log(
-  "✅ GEMINI_API_KEY:",
-  process.env.GEMINI_API_KEY?.slice(0, 10) + "..."
-);
+// Debug log for GEMINI API key
+if (process.env.GEMINI_API_KEY) {
+  console.log("✅ GEMINI_API_KEY loaded");
+} else {
+  console.warn("⚠️ GEMINI_API_KEY is missing in .env");
+}
 
-// Routes
-import fileroutes from "./routes/fileroutes.js";
-app.use("/api", fileroutes);
+// ------------------- Routes -------------------
+import fileRoutes from "./routes/fileroutes.js";
+app.use("/api", fileRoutes);
 
+// ------------------- Serve Frontend (Production) -------------------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === "production") {
+  const frontendPath = path.join(__dirname, "../client/build"); // adjust if your frontend folder name differs
+  app.use(express.static(frontendPath));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
+}
+
+// ------------------- Error Handler -------------------
+app.use((err, req, res, next) => {
+  console.error("❌ Server error:", err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
+});
+
+// ------------------- Start Server -------------------
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
