@@ -3,7 +3,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import cors from "cors";
 
 app.use(cors({
   origin: "*", // temporary: use "*" until frontend deployed
