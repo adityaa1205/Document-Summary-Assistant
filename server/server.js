@@ -46,7 +46,7 @@ const app = express();
 // ------------------- Middleware -------------------
 const allowedOrigins = [
   "http://localhost:3000",                 // local dev
-  "https://document-summary-assistant-omega.vercel.app/"       // 🔁 replace with your deployed frontend
+  "https://document-summary-assistant-omega.vercel.app"       // 🔁 replace with your deployed frontend
 ];
 
 app.use(
