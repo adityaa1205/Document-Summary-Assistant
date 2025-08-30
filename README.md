@@ -1,11 +1,5 @@
 # 📄 Document Summary Assistant  
 
-[![Node.js](https://img.shields.io/badge/Node.js-22.x-green?logo=node.js)](https://nodejs.org/)  
-[![React](https://img.shields.io/badge/React-19.x-blue?logo=react)](https://react.dev/)  
-[![Express](https://img.shields.io/badge/Express-5.x-lightgrey?logo=express)](https://expressjs.com/)  
-[![Google Gemini](https://img.shields.io/badge/Gemini-AI%20Summarizer-purple?logo=google)](https://ai.google.dev/)  
-[![License](https://img.shields.io/badge/License-MIT-yellow)](#license)  
-
 A **MERN-stack** web app that extracts text from PDFs and images (via OCR) and generates AI-powered summaries using **Google Gemini API**.  
 
 ---
@@ -108,4 +102,11 @@ Document-Summary-Assistant/
 │   ├── package.json
 │   └── .env
 └── README.md
+
+[![Node.js](https://img.shields.io/badge/Node.js-22.x-green?logo=node.js)](https://nodejs.org/)  
+[![React](https://img.shields.io/badge/React-19.x-blue?logo=react)](https://react.dev/)  
+[![Express](https://img.shields.io/badge/Express-5.x-lightgrey?logo=express)](https://expressjs.com/)  
+[![Google Gemini](https://img.shields.io/badge/Gemini-AI%20Summarizer-purple?logo=google)](https://ai.google.dev/)  
+
+
 
