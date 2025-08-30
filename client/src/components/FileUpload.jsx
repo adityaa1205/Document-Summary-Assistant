@@ -3,12 +3,30 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 
-export default function FileUpload({ onResult, setLoading }) {
-  const [length, setLength] = useState(1); // 0=short,1=medium,2=long
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ maxFiles: 1 });
+/**
+ * FileUpload component
+ * - Allows user to select a PDF/image and summary length
+ * - Shows the selected file name
+ * - Uploads the file to the backend and triggers summarization
+ */
 
+export default function FileUpload({ onResult, setLoading }) {
+  // 0=short, 1=medium, 2=long
+  const [length, setLength] = useState(1);
+  const [selectedFileName, setSelectedFileName] = useState(""); // Shows file name after selection
+
+  // Dropzone config: only 1 file allowed
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+    maxFiles: 1,
+    onDrop: (files) => {
+      if (files.length) setSelectedFileName(files[0].name);
+    },
+  });
+
+  // API base URL (env or localhost)
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
+  // Handles file upload and summary request
   const handleUpload = async () => {
     if (!acceptedFiles.length) return alert("Please select a file");
 
@@ -31,15 +49,22 @@ export default function FileUpload({ onResult, setLoading }) {
 
   return (
     <div>
+      {/* File drop/select area */}
       <div
         {...getRootProps()}
         className="border-2 border-dashed border-green-400 bg-green-50 p-10 text-center rounded-xl cursor-pointer hover:bg-green-100 transition"
       >
         <input {...getInputProps()} />
         <p className="text-gray-500">Drag & drop a PDF or image here, or click to select</p>
+        {/* Show selected file name */}
+        {selectedFileName && (
+          <p className="mt-4 text-green-700 font-medium">
+            Selected file: {selectedFileName}
+          </p>
+        )}
       </div>
 
-      {/* Slider control */}
+      {/* Summary length slider */}
       <div className="mt-6 text-center">
         <label className="block font-medium mb-2">Summary Length</label>
         <input
@@ -58,6 +83,7 @@ export default function FileUpload({ onResult, setLoading }) {
         </div>
       </div>
 
+      {/* Upload button */}
       <button
         onClick={handleUpload}
         className="w-full mt-6 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
@@ -67,5 +93,7 @@ export default function FileUpload({ onResult, setLoading }) {
     </div>
   );
 }
+
+
 
 

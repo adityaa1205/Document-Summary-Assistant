@@ -5,6 +5,7 @@ import Result from "./pages/Result.jsx";
 export default function App() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0); // NEW: progress state
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -14,6 +15,24 @@ export default function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  // Animate progress bar when loading
+  useEffect(() => {
+    let interval;
+    if (loading) {
+      setProgress(0);
+      interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev < 98) return prev + 2; // Animate up to 98%
+          return prev;
+        });
+      }, 40);
+    } else if (!loading && progress !== 0) {
+      setProgress(100); // Instantly fill to 100% when done
+      setTimeout(() => setProgress(0), 500); // Hide after short delay
+    }
+    return () => clearInterval(interval);
+  }, [loading]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center justify-center p-6 text-gray-900 dark:text-gray-100">
@@ -34,7 +53,20 @@ export default function App() {
       {/* Boxed Section */}
       <div className="w-full max-w-2xl bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
         <FileUpload onResult={setData} setLoading={setLoading} />
-        {loading && <p className="text-blue-500 mt-4">⏳ Processing your document...</p>}
+        {/* Loading Progress Bar */}
+        {loading && (
+          <div className="w-full mt-4">
+            <div className="relative h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div
+                className="absolute left-0 top-0 h-full bg-green-500 transition-all duration-100"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <div className="text-center text-sm text-gray-500 mt-2">
+              Summarizing... {progress}%
+            </div>
+          </div>
+        )}
         {data && <Result data={data} />}
       </div>
     </div>

@@ -6,6 +6,5 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 router.post('/process', upload.single('file'), processFile);
-console.log("✅ fileroutes.js loaded");
 
 export default router;
