@@ -5,9 +5,8 @@ A **MERN-stack** web app that extracts text from PDFs and images (via OCR) and g
 ---
 
 ## 🚀 Live Demo
-*(Add your deployed frontend URL here)*  
-- **Frontend**: https://your-app.vercel.app  
-- **Backend**: https://your-app.onrender.com  
+*( deployed  URL)*  
+- **Docs_Summarizer**: [https://your-app.vercel.app ](https://document-summary-assistant-omega.vercel.app/) 
 
 ---
 
@@ -50,7 +49,7 @@ A **MERN-stack** web app that extracts text from PDFs and images (via OCR) and g
 | PDF Parsing   | pdf-parse                   |
 | OCR           | tesseract.js                |
 | AI Summarizer | Google Gemini (AI Studio)   |
-| Deployment    | Vercel (frontend), Render/Heroku (backend) |
+| Deployment    | Vercel (frontend), Render (backend) |
 
 ---
 
@@ -107,6 +106,7 @@ Document-Summary-Assistant/
 [![React](https://img.shields.io/badge/React-19.x-blue?logo=react)](https://react.dev/)  
 [![Express](https://img.shields.io/badge/Express-5.x-lightgrey?logo=express)](https://expressjs.com/)  
 [![Google Gemini](https://img.shields.io/badge/Gemini-AI%20Summarizer-purple?logo=google)](https://ai.google.dev/)  
+
 
 
 
