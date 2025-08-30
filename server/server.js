@@ -41,6 +41,7 @@ if (process.env.GEMINI_API_KEY) {
 
 // ------------------- Routes -------------------
 import fileRoutes from "./routes/fileroutes.js";
+console.log("✅ Mounting /api routes from fileroutes.js");
 app.use("/api", fileRoutes);
 
 // ------------------- Serve Frontend (Production) -------------------
