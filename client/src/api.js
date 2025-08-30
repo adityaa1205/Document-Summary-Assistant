@@ -1,5 +1,4 @@
 
-
 // src/api.js
 
 // Base URL for your backend API
@@ -33,5 +32,5 @@ export async function postData(endpoint, data) {
   return res.json();
 }
 
-// Export base URL if you want to use fetch directly
+
 
