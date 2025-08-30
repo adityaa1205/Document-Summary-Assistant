@@ -32,7 +32,9 @@ A **MERN-stack** web app that extracts text from PDFs and images (via OCR) and g
 
 | Upload Document | View Summary |
 |-----------------|--------------|
-| ![Upload Screenshot](docs/upload.png) | ![Summary Screenshot](docs/summary.png) |
+| ![Upload Screenshot](<img width="1919" height="867" alt="upload" src="https://github.com/user-attachments/assets/3cc9cc23-0340-4eb5-8e77-faeda14d5967" />
+d.png) | ![Summary Screenshot]<img width="840" height="577" alt="summary" src="https://github.com/user-attachments/assets/906a4e9f-0fd6-4c36-a665-3766539e1aa2" />
+() |
 
 *(Tip: Put screenshots in a `/docs/` folder in your repo for clean linking)*  
 
@@ -111,4 +113,5 @@ Document-Summary-Assistant/
 [![Express](https://img.shields.io/badge/Express-5.x-lightgrey?logo=express)](https://expressjs.com/)  
 [![Google Gemini](https://img.shields.io/badge/Gemini-AI%20Summarizer-purple?logo=google)](https://ai.google.dev/)  
 [![License](https://img.shields.io/badge/License-MIT-yellow)](#license)  
+
 
